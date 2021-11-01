@@ -2,6 +2,28 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>MasterSkriptor</Authors>
+    <Company>Executive Computer Systems LLC</Company>
+    <Description>Services for webassembly and server side blazor apps</Description>
+    <PackageLicenseFile>D:\Code\EXCSLA.UI.Blazor.Services\LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>https://github.com/MasterSkriptor/EXCSLA.UI.Blazor.Services</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>blazor; web; front-end; webassembly</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EXCSLA.Shared.Core.ValueObjects.Common" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.11" />
+  </ItemGroup>
 
 </Project>
