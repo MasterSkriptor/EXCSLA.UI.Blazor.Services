@@ -1,0 +1,37 @@
+trigger:
+- master
+- feature/*
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  GitVersion.NuGetVersion: ''
+
+jobs:
+- job: package
+  displayName: 'Build, pack and push'
+  continueOnError: false
+  steps:
+
+  - task: UseGitVersion@5
+    displayName: 'GitVersion'
+    inputs:
+        versionSpec: '5.X'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build'
+    inputs:
+        command: 'build'
+        projects: '../src/excsla.ui.blazor.services/'
+        arguments: '--configuration $(buildConfiguration) -p:Version=$(GitVersion.NuGetVersion)'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet pack'
+    inputs:
+        command: 'pack'
+        packagesToPack: '../src/excsla.ui.blazor.services/*.csproj'
+        nobuild: true
+        packDirectory: '$(Build.ArtifactStagingDirectory)'
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'GitVersion.NuGetVersion'
