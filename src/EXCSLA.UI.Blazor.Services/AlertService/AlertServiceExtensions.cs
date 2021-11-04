@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EXCSLA.UI.Blazor.Services.AlertService
+namespace EXCSLA.UI.Blazor.Services
 {
     public static class AlertServiceExtensions
     {
