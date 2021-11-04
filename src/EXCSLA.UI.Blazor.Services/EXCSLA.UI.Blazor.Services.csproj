@@ -6,12 +6,13 @@
     <Authors>MasterSkriptor</Authors>
     <Company>Executive Computer Systems LLC</Company>
     <Description>Services for webassembly and server side blazor apps</Description>
-    <PackageLicenseFile>D:\Code\EXCSLA.UI.Blazor.Services\LICENSE</PackageLicenseFile>
+    <PackageLicenseFile></PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/MasterSkriptor/EXCSLA.UI.Blazor.Services</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>blazor; web; front-end; webassembly</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
