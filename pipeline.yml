@@ -59,6 +59,4 @@ jobs:
       command: 'push'
       packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
       nuGetFeedType: 'external'
-      publishFeedCredentials: 'NugetPush'
-      versioningScheme: byEnvVar
-      versionEnvVar: "GitVersion.SemVer"
+      publishFeedCredentials: 'Nuget-Push'
