@@ -1,5 +1,5 @@
 trigger:
-- master
+- main
 - feature/*
 pool:
   vmImage: 'windows-latest'
@@ -7,6 +7,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
   GitVersion.NuGetVersion: ''
+  solution: '**/*.sln'
 
 jobs:
 - job: package
@@ -14,24 +15,50 @@ jobs:
   continueOnError: false
   steps:
 
-  - task: UseGitVersion@5
-    displayName: 'GitVersion'
+
+  - task: gitversion/setup@0
+    displayName: 'Install GitVersion'
     inputs:
-        versionSpec: '5.X'
+      versionSpec: '5.7.0'
+  
+  - task: gitversion/execute@0
+    displayName: 'Execute GitVersion'
+
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '5.0.402'
+      includePreviewVersions: true
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet build'
     inputs:
-        command: 'build'
-        projects: '../src/excsla.ui.blazor.services/'
-        arguments: '--configuration $(buildConfiguration) -p:Version=$(GitVersion.NuGetVersion)'
+      command: 'build'
+      projects: '$(solution)'
+      arguments: '--configuration $(buildConfiguration) -p:Version=$(GitVersion.NuGetVersion)'
+
+  - task: DotNetCoreCLI@2
+    displayName: "dotnet test"
+    inputs:
+        command: 'test'
+        projects: '$(solution)'
+        arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet pack'
     inputs:
         command: 'pack'
-        packagesToPack: '../src/excsla.ui.blazor.services/*.csproj'
+        packagesToPack: '$(solution)'
         nobuild: true
         packDirectory: '$(Build.ArtifactStagingDirectory)'
         versioningScheme: 'byEnvVar'
         versionEnvVar: 'GitVersion.NuGetVersion'
+  
+  - task: NuGetCommand@2
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+      nuGetFeedType: 'external'
+      publishFeedCredentials: 'NugetPush'
+      versioningScheme: byEnvVar
+      versionEnvVar: "GitVersion.SemVer"
