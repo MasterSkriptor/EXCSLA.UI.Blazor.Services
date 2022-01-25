@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>MasterSkriptor</Authors>
     <Company>Executive Computer Systems LLC</Company>
@@ -21,10 +21,13 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net5.0'  ">
+		<PackageReference Include="EXCSLA.Shared.Core.ValueObjects.Common" Version="3.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.11" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="EXCSLA.Shared.Core.ValueObjects.Common" Version="3.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.11" />
-  </ItemGroup>
-
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net6.0'  ">
+		<PackageReference Include="EXCSLA.Shared.Core.ValueObjects.Common" Version="4.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
+	</ItemGroup>
 </Project>
